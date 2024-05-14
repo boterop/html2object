@@ -1,6 +1,6 @@
 import uuid
 import json
-import bin.utils.html_utils.html_utils as html_u
+import html_utils as html_u
 
 
 class HtmlElement:
@@ -20,7 +20,10 @@ class HtmlElement:
             return
         self.id = id
         self.name = name
-        self.attributes = attributes
+        if id:
+            self.attributes = {"id": id, **attributes}
+        else:
+            self.attributes = attributes
         self.children = children
 
     def add_child(self, child: str | object) -> object:
@@ -32,18 +35,24 @@ class HtmlElement:
         return self
 
     def set_children(self, children: list) -> object:
-        self.children = children
+        self.children = []
+        for child in children:
+            if type(child) == HtmlElement:
+                child.set_parent(self)
+            self.children.append(child)
         return self
 
     def set_parent(self, parent: object) -> object:
         self.parent = parent
         return self
 
-    def find_element_by_id(self, id: str, pile: list = []) -> object | None:
+    def find_element_by_id(self, id: str, pile: list = None) -> object | None:
+        if pile is None:
+            pile = []
         if self.id == id:
             return self
         if self.uuid in pile:
-            return
+            return None
         pile.append(self.uuid)
 
         result = None
