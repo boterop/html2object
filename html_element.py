@@ -64,7 +64,7 @@ class HtmlElement:
             .replace("}", "")
             .replace('\\"', "'")
             .replace('"', "")
-            .replace(":", "=")
+            .replace(": ", "=")
             .rstrip()
         )
         end = "/>" if children_html == "" else ">"
@@ -91,5 +91,5 @@ class HtmlElement:
             name = html_u.get_name(element)
             self.children.append(HtmlElement(html=html, parent=self))
             self._add_children(html_u.remove_element(html, name))
-        except Exception as e:
+        except AttributeError as e:
             self.children.append(html)

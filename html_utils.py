@@ -6,9 +6,10 @@ def get_element(html: str, name: str = "([a-zA-Z][a-zA-Z0-9]*)") -> tuple:
 
 
 def remove_element(html: str, name: str = "([a-zA-Z][a-zA-Z0-9]*)") -> tuple:
-    if re.match(rf"<{name}\b[^\/>]*\/>", html):
-        return re.sub(rf"<{name}\b[^\/>]*\/>", "", html, 1)
+    regex_closed_element_tag = rf"<{name}\b[^\/>]*\/>"
     element = get_element(html, name)
+    if re.match(regex_closed_element_tag, element):
+        return re.sub(element, "", html, 1)
     children = get_child(html, name=name)
     return (
         html.replace(element, "", 1)
@@ -31,9 +32,10 @@ def get_id(html: str) -> str:
 
 def get_attributes(html: str) -> dict:
     attribs = re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>", html).group(2).strip()
-    attribs_list = re.split(r"(?:[^ ,]+|, )+", attribs)
+    attribs_list = attribs.replace(", ", ",.,.replaceme.,,.").split(" ")
     attributes = {}
     for attr in attribs_list:
+        attr = attr.replace(",.,.replaceme.,,.", ", ").strip()
         if attr != "" and attr != "/":
             attr_div = attr.strip().replace("=", ":", 1).split(":")
             key = attr_div[0]
