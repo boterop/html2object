@@ -1,6 +1,6 @@
 import uuid
 import json
-import html_utils as html_u
+import html2object as html_u
 
 
 class HtmlElement:

@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/boterop/html_utils/badge.svg?branch=main)](https://coveralls.io/github/boterop/html_utils?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/boterop/html2object/badge.svg?branch=main)](https://coveralls.io/github/boterop/html2object?branch=main)
 
 # HTML 2 Object
 
@@ -18,7 +18,7 @@ This project provides a way to manipulate HTML files and update them dynamically
 First, import the necessary classes from this project:
 
 ```sh
-from html_utils import HtmlElement
+from html_element import HtmlElement
 ```
 
 read your html file and create an `HtmlElement()`
@@ -67,7 +67,7 @@ Instructions on how to install and set up your project. Include any dependencies
 2. Navigate to the project directory:
 
 ```sh
-cd html_utils
+cd html2object
 ```
 
 3. Create a virtual environment (optional but recommended):
