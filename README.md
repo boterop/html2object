@@ -4,12 +4,11 @@
 
 Tools to handle the CRUD of .html files as objects.
 
-## Table of Contents
+## Install
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+```sh
+pip install html2object
+```
 
 ## Usage
 
@@ -18,7 +17,7 @@ This project provides a way to manipulate HTML files and update them dynamically
 First, import the necessary classes from this project:
 
 ```sh
-from html_element import HtmlElement
+from html2object import HtmlElement
 ```
 
 read your html file and create an `HtmlElement()`
@@ -59,7 +58,7 @@ save the html file running
 open(path, "w").write(str(document)).close()
 ```
 
-## Installation
+## Local setup
 
 Instructions on how to install and set up your project. Include any dependencies that need to be installed.
 

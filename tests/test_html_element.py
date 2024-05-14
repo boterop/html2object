@@ -1,5 +1,5 @@
 import unittest
-from html_element import HtmlElement
+from html2object.html_element import HtmlElement
 
 
 class TestHtmlElement(unittest.TestCase):
