@@ -18,7 +18,7 @@ This project provides a way to manipulate HTML files and update them dynamically
 First, import the necessary classes from this project:
 
 ```sh
-from html_element import HtmlElement
+from html2object import HtmlElement
 ```
 
 read your html file and create an `HtmlElement()`
