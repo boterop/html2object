@@ -1,5 +1,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/boterop/html_utils/badge.svg?branch=main)](https://coveralls.io/github/boterop/html_utils?branch=main)
 
+# HTML 2 Object
+
 Tools to handle the CRUD of .html files as objects.
 
 ## Table of Contents
@@ -8,6 +10,54 @@ Tools to handle the CRUD of .html files as objects.
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Usage
+
+This project provides a way to manipulate HTML files and update them dynamically. Here's how you can use it:
+
+First, import the necessary classes from this project:
+
+```sh
+from html_utils import HtmlElement
+```
+
+read your html file and create an `HtmlElement()`
+
+```sh
+html = open(<path>, "r").read("bin/gui/index.html")
+document = HtmlElement(html)
+```
+
+now you can create scripts
+
+```sh
+update_script = HtmlElement(name="script").add_child(
+    "setInterval(() => reload(), 1500);"
+)
+document.add_child(update_script)
+```
+
+create a div
+
+```sh
+p = HtmlElement(name="p", id="textID").add_chil("Text")
+div = HtmlElement(name="div").add_child(p)
+document.add_child(div)
+```
+
+or even find an element
+
+```sh
+text_element = document.find_element_by_id("textID")
+strong = HtmlElement(name="strong").add_child("Strong text")
+text_element.set_child([strong, "No strong text"])
+```
+
+save the html file running
+
+```sh
+open(path, "w").write(str(document)).close()
+```
 
 ## Installation
 
