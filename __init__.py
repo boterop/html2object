@@ -1,2 +1,2 @@
-from .html_utils import *
+from .html2object import *
 from .html_element import HtmlElement

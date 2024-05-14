@@ -75,22 +75,6 @@ def get_child(html: str, *, name: str) -> str:
     return child
 
 
-def set_attributes(html: str, *, id: str, attributes: dict) -> str:
-    pass
-
-
-def add_attributes(html: str, *, id: str, attributes: dict) -> str:
-    pass
-
-
-def set_child(html: str, *, id: str, child: str) -> str:
-    pass
-
-
-def add_child(html: str, *, id: str, child: str) -> str:
-    pass
-
-
 def _fix_attrs(attrs: list) -> list:
     no_splitable = [",", ":", ";"]
     new_list = []
