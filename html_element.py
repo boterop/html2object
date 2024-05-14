@@ -23,32 +23,26 @@ class HtmlElement:
         self.attributes = attributes
         self.children = children
 
-    def find_element_by_id(self, id: str, pile: list = []):
+    def find_element_by_id(self, id: str, pile: list = []) -> object | None:
         if self.id == id:
-            print("Found!")
             return self
         if self.uuid in pile:
-            print("Already executed", self.uuid)
             return
         pile.append(self.uuid)
 
         result = None
         if self.parent:
-            print("Parent")
             result = self.parent.find_element_by_id(id, pile)
         if self.children and not result:
-            print("Children", len(self.children))
             for child in self.children:
-                print("str" if type(child) == str else "Element")
                 result = (
                     None if type(child) == str else child.find_element_by_id(id, pile)
                 )
-                print("Result:", result)
                 if result:
-                    return result
+                    break
         return result
 
-    def __str__(self):
+    def __str__(self) -> str:
         children_html = ""
         children = self.children if self.children else []
         for child in children:
@@ -76,6 +70,8 @@ class HtmlElement:
         self.name = html_u.get_name(element)
         self.attributes = html_u.get_attributes(element)
         self.id = self.attributes.get("id")
+        if self.id:
+            self.id = self.id.replace('"', "")
         children_html = html_u.get_child(html, name=self.name)
         if children_html == None:
             self.children = None
