@@ -23,6 +23,22 @@ class HtmlElement:
         self.attributes = attributes
         self.children = children
 
+    def add_child(self, child: str | object) -> object:
+        if not self.children:
+            self.children = []
+        if type(child) == HtmlElement:
+            child.set_parent(self)
+        self.children.append(child)
+        return self
+
+    def set_children(self, children: list) -> object:
+        self.children = children
+        return self
+
+    def set_parent(self, parent: object) -> object:
+        self.parent = parent
+        return self
+
     def find_element_by_id(self, id: str, pile: list = []) -> object | None:
         if self.id == id:
             return self
