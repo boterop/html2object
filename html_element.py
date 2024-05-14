@@ -53,12 +53,14 @@ class HtmlElement:
             children_html += "\n"
         children_html = children_html.strip()
         attributes = (
-            json.dumps(self.attributes)
+            json.dumps(self.attributes, separators=(" ", "="))
             .replace("{", " ")
             .replace("}", "")
-            .replace('\\"', "'")
+            .replace("'", "<single_quote>")
+            .replace('\\"', "<quote>")
             .replace('"', "")
-            .replace(": ", "=")
+            .replace("<single_quote>", "'")
+            .replace("<quote>", '"')
             .rstrip()
         )
         end = "/>" if children_html == "" else ">"
@@ -66,6 +68,7 @@ class HtmlElement:
         return f"<{self.name}{attributes}{end}{children_html}{block_end}".strip()
 
     def _parse(self, html: str):
+        html = html.replace("\n", " ")
         element = html_u.get_element(html)
         self.name = html_u.get_name(element)
         self.attributes = html_u.get_attributes(element)

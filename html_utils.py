@@ -32,14 +32,20 @@ def get_id(html: str) -> str:
 
 def get_attributes(html: str) -> dict:
     attribs = re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>", html).group(2).strip()
-    attribs_list = attribs.replace(", ", ",.,.replaceme.,,.").split(" ")
+    attribs_list = attribs.split(" ")
+    attribs_list = _fix_attrs(attribs_list)
     attributes = {}
+    last_key = ""
     for attr in attribs_list:
-        attr = attr.replace(",.,.replaceme.,,.", ", ").strip()
         if attr != "" and attr != "/":
-            attr_div = attr.strip().replace("=", ":", 1).split(":")
+            attr_div = attr.strip().split("=", 1)
             key = attr_div[0]
-            value = attr_div[1]
+            if len(attr_div) == 1:
+                key = last_key
+                value = attributes[key] + " " + attr_div[0]
+            else:
+                value = attr_div[1]
+            last_key = key
             attributes[key] = value
     return attributes
 
@@ -83,3 +89,19 @@ def set_child(html: str, *, id: str, child: str) -> str:
 
 def add_child(html: str, *, id: str, child: str) -> str:
     pass
+
+
+def _fix_attrs(attrs: list) -> list:
+    no_splitable = [",", ":", ";"]
+    new_list = []
+    mix = None
+    for attr in attrs:
+        if attr.strip() != "":
+            if mix:
+                attr = mix + " " + attr
+                mix = None
+            if attr.strip()[-1] in no_splitable:
+                mix = attr
+            else:
+                new_list.append(attr)
+    return new_list
