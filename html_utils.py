@@ -7,7 +7,7 @@ def get_element(html: str, name: str = "([a-zA-Z][a-zA-Z0-9]*)") -> tuple:
 
 def remove_element(html: str, name: str = "([a-zA-Z][a-zA-Z0-9]*)") -> tuple:
     if re.match(rf"<{name}\b[^\/>]*\/>", html):
-        return re.sub(rf"<{name}\b[^\/>]*\/>", "", html)
+        return re.sub(rf"<{name}\b[^\/>]*\/>", "", html, 1)
     element = get_element(html, name)
     children = get_child(html, name=name)
     return (
@@ -30,12 +30,12 @@ def get_id(html: str) -> str:
 
 
 def get_attributes(html: str) -> dict:
-    attribs = re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>", html).group(2)
-    attribs_list = attribs.strip().split(" ")
+    attribs = re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>", html).group(2).strip()
+    attribs_list = re.split(r"(?:[^ ,]+|, )+", attribs)
     attributes = {}
     for attr in attribs_list:
         if attr != "" and attr != "/":
-            attr_div = attr.split("=")
+            attr_div = attr.strip().replace("=", ":", 1).split(":")
             key = attr_div[0]
             value = attr_div[1]
             attributes[key] = value
@@ -61,6 +61,8 @@ def get_child(html: str, *, name: str) -> str:
     for _ in range(count):
         html = re.sub(rf"<\/{name}>", "<remove>", html, 1)
     (end_index, _) = re.search(rf"<\/{name}>", html).span()
+    html = re.sub("<remove>", f"</{name}>", html)
+    end_index = end_index - ((5 - len(name)) * count)
     child = html[:end_index].replace(element, "").strip()
     return child
 
