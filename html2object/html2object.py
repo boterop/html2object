@@ -11,7 +11,6 @@ def remove_element(html: str, name: str = "([a-zA-Z][a-zA-Z0-9]*)") -> tuple:
     if re.match(regex_closed_element_tag, element):
         return re.sub(element, "", html, 1)
     children = get_child(html, name=name)
-    print(children)
     return (
         html.replace(element, "", 1)
         .replace(children, "", 1)
