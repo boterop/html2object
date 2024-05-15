@@ -43,6 +43,9 @@ class HtmlElement:
         self.parent = parent
         return self
 
+    def add_attribute(self, key, value):
+        self.attributes[key] = value
+
     def find_element_by_id(self, id: str, pile: list = None) -> object | None:
         if pile is None:
             pile = []
@@ -106,5 +109,5 @@ class HtmlElement:
             name = html_u.get_name(element)
             self.children.append(HtmlElement(html=html, parent=self))
             self._add_children(html_u.remove_element(html, name))
-        except AttributeError as e:
+        except AttributeError:
             self.children.append(html)

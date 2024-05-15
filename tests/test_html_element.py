@@ -66,6 +66,15 @@ class TestHtmlElement(unittest.TestCase):
         result = parent.find_element_by_id("nonexistent")
         self.assertIsNone(result)
 
+    def test_find_element_by_id_with_real_html(self):
+        parent = HtmlElement(open("tests/assets/index.html").read())
+
+        result = parent.find_element_by_id("info-image")
+        assert result.name == "img"
+        assert result.id == "info-image"
+        assert result.children is None
+        assert result.parent.name == "div"
+
     def test_str(self):
         element = HtmlElement(name="div", id="myDiv", attributes={"class": "container"})
         self.assertEqual(str(element), "<div id=myDiv class=container/>")
