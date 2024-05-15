@@ -11,12 +11,10 @@ def remove_element(html: str, name: str = "([a-zA-Z][a-zA-Z0-9]*)") -> tuple:
     if re.match(regex_closed_element_tag, element):
         return re.sub(element, "", html, 1)
     children = get_child(html, name=name)
-    return (
-        html.replace(element, "", 1)
-        .replace(children, "", 1)
-        .replace(f"</{name}>", "", 1)
-        .strip()
-    )
+    html = html.replace(element, "", 1)
+    if children:
+        html = html.replace(children, "", 1)
+    return html.replace(f"</{name}>", "", 1).strip()
 
 
 def get_name(html: str) -> str:
@@ -24,12 +22,12 @@ def get_name(html: str) -> str:
 
 
 def get_attributes(html: str) -> dict:
-    attribs = re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>", html)[2].strip()
-    attribs_list = attribs.split(" ")
-    attribs_list = _fix_attrs(attribs_list)
+    attrib = re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>", html)[2].strip()
+    attrib_list = attrib.split(" ")
+    attrib_list = _fix_attrs(attrib_list)
     attributes = {}
     last_key = ""
-    for attr in attribs_list:
+    for attr in attrib_list:
         if attr not in ["", "/"]:
             attr_div = attr.strip().split("=", 1)
             key = attr_div[0]
@@ -45,13 +43,20 @@ def get_attributes(html: str) -> dict:
 
 def get_child(html: str, *, name: str) -> str:
     element = get_element(html, name=name)
-    if re.match(rf"<{name}\b[^\/>]*\/>", element):
+
+    if re.match(rf"<{name}\b([^>]*)\/>", element):
         return None
-    children = re.findall(rf"<\/?{name}\b[^>]*>", html)
-    children.pop(0)
+    (start_index, end_index) = get_tag_content_index(html, tag_name=name)
+    return html[start_index:end_index].strip()
+
+
+def get_tag_content_index(html: str, *, tag_name: str) -> tuple:
+    (_, start_index) = re.search(rf"<{tag_name}\b[^>]*>", html).span()
+    tags = re.findall(rf"<\/?{tag_name}\b[^>]*>", html)
+    tags.pop(0)
     element_end = 1
     count = 0
-    for element_tag in children:
+    for element_tag in tags:
         if re.match(r"<\/", element_tag):
             element_end -= 1
         else:
@@ -59,13 +64,11 @@ def get_child(html: str, *, name: str) -> str:
             count += 1
         if element_end < 1:
             break
-    for _ in range(count):
-        html = re.sub(rf"<\/{name}>", "<remove>", html, 1)
-    (_, start_index) = re.search(rf"<{name}\b[^>]*>", html).span()
-    (end_index, _) = re.search(rf"<\/{name}>", html).span()
-    html = re.sub("<remove>", f"</{name}>", html)
-    end_index = end_index - ((5 - len(name)) * count)
-    return html[start_index:end_index].strip()
+    if count > 0:
+        html = re.sub(rf"<\/{tag_name}>", "<remove>", html, count)
+    (end_index, _) = re.search(rf"<\/{tag_name}>", html).span()
+    end_index = end_index - ((5 - len(tag_name)) * count)
+    return (start_index, end_index)
 
 
 def _fix_attrs(attrs: list) -> list:

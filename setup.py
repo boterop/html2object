@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="html2object",
-    version="0.1.3",
+    version="0.1.4",
     author="boterop",
     author_email="boterop22@gmail.com",
     description="Tools to handle the CRUD of .html files as objects.",
