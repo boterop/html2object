@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 (15.05.2024)
+
+- Fix bugs creating "<name />" elements
+
 ## 0.1.3 (15.05.2024)
 
 - Fix bugs getting children
