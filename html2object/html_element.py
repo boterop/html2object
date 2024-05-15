@@ -46,7 +46,7 @@ class HtmlElement:
     def add_attribute(self, key, value):
         self.attributes[key] = value
 
-    def find_element_by_id(self, id: str, pile: list = None) -> object | None:
+    def get_element_by_id(self, id: str, pile: list = None) -> object | None:
         if pile is None:
             pile = []
         if self.id == id:
@@ -55,15 +55,25 @@ class HtmlElement:
             return None
         pile.append(self.uuid)
 
-        result = self.parent.find_element_by_id(id, pile) if self.parent else None
+        result = self.parent.get_element_by_id(id, pile) if self.parent else None
         if self.children and not result:
             for child in self.children:
                 result = (
-                    None if type(child) == str else child.find_element_by_id(id, pile)
+                    None if type(child) == str else child.get_element_by_id(id, pile)
                 )
                 if result:
                     break
         return result
+
+    def get_elements_by_name(self, name: str) -> list:
+        elements = []
+        if self.name == name:
+            elements.append(self)
+        if self.children:
+            for child in self.children:
+                if isinstance(child, HtmlElement):
+                    elements.extend(child.get_elements_by_name(name))
+        return elements
 
     def __str__(self) -> str:
         children_html = ""

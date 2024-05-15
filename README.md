@@ -47,7 +47,7 @@ document.add_child(div)
 or even find an element
 
 ```sh
-text_element = document.find_element_by_id("textID")
+text_element = document.get_element_by_id("textID")
 strong = HtmlElement(name="strong").add_child("Strong text")
 text_element.set_child([strong, "No strong text"])
 ```
