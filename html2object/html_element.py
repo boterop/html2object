@@ -20,10 +20,7 @@ class HtmlElement:
             return
         self.id = id
         self.name = name
-        if id:
-            self.attributes = {"id": id, **attributes}
-        else:
-            self.attributes = attributes
+        self.attributes = {"id": id, **attributes} if id else attributes
         self.children = children
 
     def add_child(self, child: str | object) -> object:
@@ -55,9 +52,7 @@ class HtmlElement:
             return None
         pile.append(self.uuid)
 
-        result = None
-        if self.parent:
-            result = self.parent.find_element_by_id(id, pile)
+        result = self.parent.find_element_by_id(id, pile) if self.parent else None
         if self.children and not result:
             for child in self.children:
                 result = (
@@ -69,12 +64,9 @@ class HtmlElement:
 
     def __str__(self) -> str:
         children_html = ""
-        children = self.children if self.children else []
+        children = self.children or []
         for child in children:
-            if type(child) is str:
-                children_html += child
-            else:
-                children_html += str(child)
+            children_html += child if type(child) is str else str(child)
             children_html += "\n"
         children_html = children_html.strip()
         attributes = (
@@ -101,14 +93,13 @@ class HtmlElement:
         if self.id:
             self.id = self.id.replace('"', "")
         children_html = html_u.get_child(html, name=self.name)
-        if children_html == None:
-            self.children = None
-        else:
+        self.children = None
+        if children_html is not None:
             self.children = []
             self._add_children(children_html)
 
     def _add_children(self, html: str):
-        if html == "":
+        if not html:
             return
         try:
             element = html_u.get_element(html)
