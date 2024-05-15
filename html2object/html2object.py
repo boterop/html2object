@@ -24,11 +24,6 @@ def get_name(html: str) -> str:
     return re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b", html).group().replace("<", "")
 
 
-def get_id(html: str) -> str:
-    id = re.search(r'id=[\'"]([^\'"]+)[\'"]', html)
-    return id.group() if id else ""
-
-
 def get_attributes(html: str) -> dict:
     attribs = re.search(r"<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>", html)[2].strip()
     attribs_list = attribs.split(" ")

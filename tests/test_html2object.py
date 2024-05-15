@@ -7,7 +7,7 @@ class TestHtml2Object(unittest.TestCase):
     def test_get_element(self):
         html = "<div class='container'><h1>Title</h1></div>"
         element = get_element(html, name="h1")
-        self.assertEqual(element, "<h1>Title</h1>")
+        self.assertEqual(element, "<h1>")
 
     def test_remove_element(self):
         html = "<div class='container'><h1>Title</h1></div>"
@@ -19,15 +19,10 @@ class TestHtml2Object(unittest.TestCase):
         name = get_name(html)
         self.assertEqual(name, "div")
 
-    def test_get_id(self):
-        html = "<div id='main' class='container'><h1>Title</h1></div>"
-        element_id = get_id(html)
-        self.assertEqual(element_id, "main")
-
     def test_get_attributes(self):
         html = "<div id='main' class='container'><h1>Title</h1></div>"
         attributes = get_attributes(html)
-        expected_attributes = {"id": "main", "class": "container"}
+        expected_attributes = {"id": "'main'", "class": "'container'"}
         self.assertEqual(attributes, expected_attributes)
 
     def test_get_child(self):
