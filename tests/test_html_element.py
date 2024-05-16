@@ -109,6 +109,11 @@ class TestHtmlElement(unittest.TestCase):
         element.add_child("Hello, World!")
         self.assertEqual(str(element), "<div>Hello, World!</div>")
 
+    def test_get_elements_by_class_name(self):
+        document = HtmlElement(self.index_html)
+        elements = document.get_elements_by_class_name("radix-themes")
+        self.assertEqual(len(elements), 1)
+
 
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
