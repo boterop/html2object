@@ -78,6 +78,16 @@ class HtmlElement:
                     elements.extend(child.get_elements_by_name(name))
         return elements
 
+    def get_elements_by_class_name(self, class_name: str) -> list:
+        elements = []
+        if "class" in self.attributes and class_name in self.get_attribute("class"):
+            elements.append(self)
+        if self.children:
+            for child in self.children:
+                if isinstance(child, HtmlElement):
+                    elements.extend(child.get_elements_by_class_name(class_name))
+        return elements
+
     def __str__(self) -> str:
         children_html = ""
         children = self.children or []
