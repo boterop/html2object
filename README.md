@@ -10,6 +10,50 @@ Tools to handle the CRUD of .html files as objects.
 pip install html2object
 ```
 
+## Functions
+
+- Parse your html file
+
+  ```py
+  html = open(<path>, "r").read("bin/gui/index.html")
+  document = HtmlElement(html)
+  ```
+
+- Add attributes
+
+  ```py
+  document.add_attribute("class", "flex pt-2")
+  ```
+
+- Add children
+
+  ```py
+  p = HtmlElement(name="p").add_child("This is a text")
+  document.add_child(p)
+  ```
+
+- Set new children
+
+  ```py
+  p = HtmlElement(name="p").add_child("This is a text")
+  document.set_children([p])
+  ```
+
+- Get element by id
+
+  ```py
+  image = document.get_element_by_id("image_id")
+  image.add_attribute("src", "image_url")
+  ```
+
+- Get element by id
+
+  ```py
+  images = document.get_elements_by_name("image")
+  for image in images:
+    url_list.append(image.get_attribute("src"))
+  ```
+
 ## Usage
 
 This project provides a way to manipulate HTML files and update them dynamically. Here's how you can use it:
@@ -20,14 +64,16 @@ First, import the necessary classes from this project:
 from html2object import HtmlElement
 ```
 
-read your html file and create an `HtmlElement()`
+read your html file and:
+
+#### Create an `HtmlElement()`
 
 ```sh
 html = open(<path>, "r").read("bin/gui/index.html")
 document = HtmlElement(html)
 ```
 
-now you can create scripts
+#### Create scripts
 
 ```sh
 update_script = HtmlElement(name="script").add_child(
@@ -36,7 +82,7 @@ update_script = HtmlElement(name="script").add_child(
 document.add_child(update_script)
 ```
 
-create a div
+#### Create a div
 
 ```sh
 p = HtmlElement(name="p", id="textID").add_chil("Text")
@@ -44,15 +90,15 @@ div = HtmlElement(name="div").add_child(p)
 document.add_child(div)
 ```
 
-or even find an element
+#### Use Document functions like JS
 
 ```sh
-text_element = document.find_element_by_id("textID")
+text_element = document.get_element_by_id("textID")
 strong = HtmlElement(name="strong").add_child("Strong text")
 text_element.set_child([strong, "No strong text"])
 ```
 
-save the html file running
+### save the html file running
 
 ```sh
 open(path, "w").write(str(document)).close()
