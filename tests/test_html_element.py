@@ -28,6 +28,22 @@ class TestHtmlElement(unittest.TestCase):
         self.assertEqual(parent.children, [child])
         self.assertEqual(child.parent, parent)
 
+    def test_get_attribute(self):
+        document = HtmlElement(self.index_html)
+        image = document.get_element_by_id("info-image")
+        image_url = image.get_attribute("src")
+
+        self.assertEqual(image_url, '"projects/podnation.jpg"')
+
+    def test_set_attribute(self):
+        document = HtmlElement(self.index_html)
+        image = document.get_element_by_id("info-image")
+        image_url = image.get_attribute("src")
+        self.assertEqual(image_url, '"projects/podnation.jpg"')
+        image.add_attribute("src", '"fake-url.jpg"')
+        image_url = image.get_attribute("src")
+        self.assertEqual(image_url, '"fake-url.jpg"')
+
     def test_set_children(self):
         parent = HtmlElement(name="div")
         children = [

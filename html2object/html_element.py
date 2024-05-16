@@ -46,6 +46,9 @@ class HtmlElement:
     def add_attribute(self, key, value):
         self.attributes[key] = value
 
+    def get_attribute(self, key):
+        return self.attributes.get(key)
+
     def get_element_by_id(self, id: str, pile: list = None) -> object | None:
         if pile is None:
             pile = []
