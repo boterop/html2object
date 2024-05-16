@@ -31,5 +31,5 @@ class TestHtml2Object(unittest.TestCase):
         self.assertEqual(child, "<span>Child</span>")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()

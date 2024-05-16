@@ -110,5 +110,5 @@ class TestHtmlElement(unittest.TestCase):
         self.assertEqual(str(element), "<div>Hello, World!</div>")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
