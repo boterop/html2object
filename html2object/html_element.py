@@ -80,7 +80,6 @@ class HtmlElement:
 
     def get_elements_by_class_name(self, class_name: str) -> list:
         elements = []
-        print(class_name, self.get_attribute("class"))
         if "class" in self.attributes and class_name in self.get_attribute("class"):
             elements.append(self)
         if self.children:

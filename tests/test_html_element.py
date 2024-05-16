@@ -113,6 +113,7 @@ class TestHtmlElement(unittest.TestCase):
         document = HtmlElement(self.index_html)
         elements = document.get_elements_by_class_name("radix-themes")
         self.assertEqual(len(elements), 1)
+        self.assertEqual(elements[0].get_attribute("data-accent-color"), '"cyan"')
 
 
 if __name__ == "__main__":  # pragma: no cover

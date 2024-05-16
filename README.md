@@ -46,12 +46,20 @@ pip install html2object
   image.add_attribute("src", "image_url")
   ```
 
-- Get element by id
+- Get elements by name
 
   ```py
   images = document.get_elements_by_name("image")
   for image in images:
     url_list.append(image.get_attribute("src"))
+  ```
+
+- Get element by class
+
+  ```py
+  theme_element = document.get_elements_by_class_name("radix-themes")
+  for element in theme_element:
+    print(f"Main color: {element.get_attribute('data-accent-color')}")
   ```
 
 ## Usage
