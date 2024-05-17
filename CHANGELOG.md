@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 (16.05.2024)
+
+- Created a new function `get_elements_by_class_name(name: str) -> list[HtmlElement]` to retrieve all HTML element by its class.
+
 ## 1.0.0 (15.05.2024)
 
 - Renamed the `find_element_by_id` function to `get_element_by_id` for consistency with the `getElementById` function in JavaScript.
