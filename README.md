@@ -1,6 +1,11 @@
+<div align="center">
+
+[![PyPI version](https://badge.fury.io/py/html2object.svg)](https://badge.fury.io/py/html2object)
 [![Coverage Status](https://coveralls.io/repos/github/boterop/html2object/badge.svg?branch=main)](https://coveralls.io/github/boterop/html2object?branch=main)
 
 # HTML 2 Object
+
+</div>
 
 Tools to handle the CRUD of .html files as objects.
 
