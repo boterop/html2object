@@ -54,7 +54,7 @@ pip install html2object
     url_list.append(image.get_attribute("src"))
   ```
 
-- Get elements by class
+- Get elements by class name
 
   ```py
   theme_element = document.get_elements_by_class_name("radix-themes")
